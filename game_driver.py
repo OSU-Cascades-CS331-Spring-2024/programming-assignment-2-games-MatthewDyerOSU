@@ -4,6 +4,7 @@
 import sys
 from players import *
 from othello_board import OthelloBoard
+import argparse
 
 
 class GameDriver:
@@ -78,10 +79,20 @@ class GameDriver:
         else:
             print("Player 2 Wins!")
 
+        if isinstance(game.p1, MinimaxPlayer):
+            avg_time = game.p1.get_avg_time()
+            print("Player 1 average time to move:", avg_time, "seconds")
+
+        if isinstance(game.p2, MinimaxPlayer):
+            avg_time = game.p2.get_avg_time()
+            print("Player 2 average time to move:", avg_time, "seconds")
+
 
 if __name__ == "__main__":
-    if(len(sys.argv)) != 3:
-        print("Usage: python3 game_driver.py <player1 type> <player2 type>")
-        exit(1)
-    game = GameDriver(sys.argv[1], sys.argv[2], 4, 4)
+    parser = argparse.ArgumentParser(description="Play a game of Othello.")
+    parser.add_argument("player1_type", help="Type of player for Player 1")
+    parser.add_argument("player2_type", help="Type of player for Player 2")
+    parser.add_argument("--board_size", type=int, default=4, help="Size of the board (default: 4)")
+    args = parser.parse_args()
+    game = GameDriver(args.player1_type, args.player2_type, args.board_size, args.board_size)
     game.run()
