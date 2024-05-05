@@ -86,8 +86,6 @@ class OthelloBoard(Board):
             (next_col, next_row) = self.set_coords_in_direction(col, row, d)
             return 1+ self.flip_pieces_helper(next_col, next_row, symbol, d)
 
-
-
     def flip_pieces(self, col, row, symbol):
         pieces_flipped = 0
         if not self.is_in_bounds(col, row):
