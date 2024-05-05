@@ -8,11 +8,11 @@ import argparse
 
 
 class GameDriver:
-    def __init__(self, p1type, p2type, num_rows, num_cols):
+    def __init__(self, p1type, p2type, num_rows, num_cols, depth):
         if p1type.lower() in "human":
             self.p1 = HumanPlayer('X')
         elif p1type.lower() in "minimax" or p1type in "ai":
-            self.p1 = MinimaxPlayer('X')
+            self.p1 = MinimaxPlayer('X', depth)
         else:
             print("Invalid player 1 type!")
             exit(-1)
@@ -20,7 +20,7 @@ class GameDriver:
         if p2type.lower() in "human":
             self.p2 = HumanPlayer('O')
         elif p2type.lower() in "minimax" or p1type in "ai":
-            self.p2 = MinimaxPlayer('O')
+            self.p2 = MinimaxPlayer('O', depth)
         else:
             print("Invalid player 2 type!")
             exit(-1)
@@ -93,6 +93,7 @@ if __name__ == "__main__":
     parser.add_argument("player1_type", help="Type of player for Player 1")
     parser.add_argument("player2_type", help="Type of player for Player 2")
     parser.add_argument("--board_size", type=int, default=4, help="Size of the board (default: 4)")
+    parser.add_argument("--depth", type=int, default=3, help="Depth of recursion for minimax search (default: 3)")
     args = parser.parse_args()
-    game = GameDriver(args.player1_type, args.player2_type, args.board_size, args.board_size)
+    game = GameDriver(args.player1_type, args.player2_type, args.board_size, args.board_size, args.depth)
     game.run()

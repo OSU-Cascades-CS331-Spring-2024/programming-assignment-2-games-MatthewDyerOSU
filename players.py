@@ -32,18 +32,19 @@ class HumanPlayer(Player):
 
 class MinimaxPlayer(Player):
 
-    def __init__(self, symbol):
+    def __init__(self, symbol, depth):
         Player.__init__(self, symbol)
         if symbol == 'X':
             self.oppSym = 'O'
         else:
             self.oppSym = 'X'
+        self.depth = depth
         self.total_move_time = 0
         self.num_moves = 0
 
     def get_move(self, board):
         start_time = time.time()
-        _, move = self.minimax(board, 3, True)
+        _, move = self.minimax(board, self.depth, True)
         end_time = time.time()
         move_time = end_time - start_time
         self.total_move_time += move_time
@@ -53,7 +54,7 @@ class MinimaxPlayer(Player):
     def get_avg_time(self):
         if self.num_moves == 0:
             return 0
-        return round(self.total_move_time / self.num_moves, 4)
+        return round(self.total_move_time / self.num_moves, 6)
 
     def utility(self, board):
         # this is the win condition logic in GameDriver class
